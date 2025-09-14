@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate YT-DLP Icons</title>
+</head>
+<body style="background: #0c0c0c; display: flex; gap: 20px; padding: 20px;">
+
+    <!-- 192x192 Icon -->
+    <canvas id="icon192" width="192" height="192"></canvas>
+
+    <!-- 512x512 Icon -->
+    <canvas id="icon512" width="512" height="512"></canvas>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            const centerX = size / 2;
+            const centerY = size / 2;
+
+            // Background circle
+            ctx.fillStyle = '#de0000';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, size * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw download arrow
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.06;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Arrow shaft
+            ctx.beginPath();
+            ctx.moveTo(centerX, size * 0.25);
+            ctx.lineTo(centerX, size * 0.6);
+            ctx.stroke();
+
+            // Arrow head
+            ctx.beginPath();
+            ctx.moveTo(centerX - size * 0.12, size * 0.48);
+            ctx.lineTo(centerX, size * 0.6);
+            ctx.lineTo(centerX + size * 0.12, size * 0.48);
+            ctx.stroke();
+
+            // Bottom line
+            ctx.beginPath();
+            ctx.moveTo(centerX - size * 0.2, size * 0.7);
+            ctx.lineTo(centerX + size * 0.2, size * 0.7);
+            ctx.stroke();
+
+            // Add text "YT" at bottom
+            ctx.font = `bold ${size * 0.12}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('YT', centerX, size * 0.85);
+        }
+
+        // Generate 192x192 icon
+        const canvas192 = document.getElementById('icon192');
+        drawIcon(canvas192, 192);
+
+        // Generate 512x512 icon
+        const canvas512 = document.getElementById('icon512');
+        drawIcon(canvas512, 512);
+
+        // Download function
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Auto-download both icons after a delay
+        setTimeout(() => {
+            downloadCanvas(canvas192, 'icon-192.png');
+            setTimeout(() => {
+                downloadCanvas(canvas512, 'icon-512.png');
+            }, 500);
+        }, 1000);
+    </script>
+
+    <div style="color: white; margin-left: 20px;">
+        <h2>YT-DLP Icons Generated</h2>
+        <p>Right-click each canvas and save as:</p>
+        <ul>
+            <li>icon-192.png</li>
+            <li>icon-512.png</li>
+        </ul>
+        <p>Or wait for automatic download...</p>
+    </div>
+</body>
+</html>
