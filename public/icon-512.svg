@@ -1,0 +1,9 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="256" cy="256" r="230.4" fill="#de0000"/>
+  <g stroke="white" stroke-width="30.72" stroke-linecap="round" fill="none">
+    <line x1="256" y1="128" x2="256" y2="307.2"/>
+    <polyline points="194.56,245.76 256,307.2 317.44,245.76"/>
+    <line x1="153.6" y1="358.4" x2="358.4" y2="358.4"/>
+  </g>
+  <text x="256" y="435.2" font-family="Arial" font-size="61.44" font-weight="bold" fill="white" text-anchor="middle">YT</text>
+</svg>

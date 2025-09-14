@@ -261,22 +261,46 @@
   }
 }
 
-/* PWA Install Prompt */
-.install-prompt {
+/* PWA Install Button */
+.install-button {
   position: fixed;
-  bottom: 20px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--bg-card);
-  padding: 16px 20px;
-  border-radius: var(--radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  display: none;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(222, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  animation: slideUp 0.3s ease;
   z-index: 1000;
 }
 
-.install-prompt.show {
-  display: flex;
+.install-button:hover {
+  background: var(--accent-hover);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 16px rgba(222, 0, 0, 0.4);
+}
+
+.install-button .material-icons {
+  font-size: 20px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
 }

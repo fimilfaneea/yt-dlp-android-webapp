@@ -11,21 +11,23 @@ export default defineConfig({
         name: 'YT-DLP for Termux',
         short_name: 'YT-DLP',
         description: 'YouTube downloader commands for Termux',
+        start_url: '/',
+        scope: '/',
         theme_color: '#0c0c0c',
         background_color: '#0c0c0c',
         display: 'standalone',
         orientation: 'portrait',
         icons: [
           {
-            src: '/icon-192.png',
+            src: '/icon-192.svg',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any maskable'
           },
           {
-            src: '/icon-512.png',
+            src: '/icon-512.svg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any maskable'
           }
         ]
