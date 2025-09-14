@@ -5,6 +5,8 @@ function App() {
   const [url, setUrl] = useState('')
   const [status, setStatus] = useState({ message: '', type: '' })
   const [copiedButton, setCopiedButton] = useState('')
+  const [deferredPrompt, setDeferredPrompt] = useState(null)
+  const [showInstallButton, setShowInstallButton] = useState(false)
 
   // Auto-paste URL from clipboard on mount
   useEffect(() => {
@@ -21,6 +23,21 @@ function App() {
       }
     }
     pasteFromClipboard()
+  }, [])
+
+  // PWA install prompt handler
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault()
+      setDeferredPrompt(e)
+      setShowInstallButton(true)
+    }
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    }
   }, [])
 
   const isValidURL = (string) => {
@@ -85,6 +102,17 @@ function App() {
 
   const handleClear = () => {
     setUrl('')
+  }
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt()
+      const { outcome } = await deferredPrompt.userChoice
+      if (outcome === 'accepted') {
+        setShowInstallButton(false)
+      }
+      setDeferredPrompt(null)
+    }
   }
 
   return (
@@ -162,6 +190,14 @@ function App() {
         <p className="hint">Downloads save to: /Download/yt-dlp/</p>
         <p className="hint-secondary">Paste command in Termux to download</p>
       </footer>
+
+      {/* PWA Install Button */}
+      {showInstallButton && (
+        <button className="install-button" onClick={handleInstallClick}>
+          <span className="material-icons">download</span>
+          Install App
+        </button>
+      )}
     </div>
   )
 }
