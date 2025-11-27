@@ -79,7 +79,7 @@ function App() {
       return
     }
 
-    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp "${url}"`
+    const command = `cd /storage/emulated/0/Download && yt-dlp "${url}"`
     const copied = await copyToClipboard(command, 'download')
 
     if (copied) {
@@ -187,7 +187,7 @@ function App() {
 
       {/* Footer */}
       <footer className="footer">
-        <p className="hint">Downloads save to: /Download/yt-dlp/</p>
+        <p className="hint">Downloads save to: /Download/</p>
         <p className="hint-secondary">Paste command in Termux to download</p>
       </footer>
 
