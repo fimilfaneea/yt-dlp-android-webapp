@@ -79,7 +79,7 @@ function App() {
       return
     }
 
-    const command = `cd /storage/emulated/0/Download && yt-dlp -o '%(title).15B.%(ext)s' --replace-in-metadata title '[^a-zA-Z0-9]' '' "${url}"`
+    const command = `cd /storage/emulated/0/Download && yt-dlp -o "%(title)[:15]s.%(ext)s" --replace-in-metadata title "[^a-zA-Z0-9]" "" "${url}"`
     const copied = await copyToClipboard(command, 'download')
 
     if (copied) {
