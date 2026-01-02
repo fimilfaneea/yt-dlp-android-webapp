@@ -83,7 +83,7 @@ function App() {
   const handleDownload = async () => {
     if (!validateUrl()) return
 
-    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp "${url}"`
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp --no-part "${url}"`
     const copied = await copyToClipboard(command, 'download')
 
     if (copied) {
@@ -96,7 +96,7 @@ function App() {
   const handleDownload360 = async () => {
     if (!validateUrl()) return
 
-    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp -f "bestvideo[height<=360]+bestaudio/best[height<=360]" "${url}"`
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp --no-part -f "bestvideo[height<=360]+bestaudio/best[height<=360]" "${url}"`
     const copied = await copyToClipboard(command, '360p')
 
     if (copied) {
@@ -109,7 +109,7 @@ function App() {
   const handleDownload480 = async () => {
     if (!validateUrl()) return
 
-    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480]" "${url}"`
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp --no-part -f "bestvideo[height<=480]+bestaudio/best[height<=480]" "${url}"`
     const copied = await copyToClipboard(command, '480p')
 
     if (copied) {
@@ -122,7 +122,7 @@ function App() {
   const handleDownloadAudio = async () => {
     if (!validateUrl()) return
 
-    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp -x --audio-format mp3 "${url}"`
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp --no-part -x --audio-format mp3 "${url}"`
     const copied = await copyToClipboard(command, 'audio')
 
     if (copied) {
@@ -210,16 +210,6 @@ function App() {
           </button>
 
           <button
-            className={`btn btn-primary ${copiedButton === '360p' ? 'success' : ''}`}
-            onClick={handleDownload360}
-          >
-            <span className="material-icons">
-              {copiedButton === '360p' ? 'check' : 'sd'}
-            </span>
-            <span>{copiedButton === '360p' ? 'Copied!' : '360p'}</span>
-          </button>
-
-          <button
             className={`btn btn-primary ${copiedButton === '480p' ? 'success' : ''}`}
             onClick={handleDownload480}
           >
@@ -227,6 +217,16 @@ function App() {
               {copiedButton === '480p' ? 'check' : 'hd'}
             </span>
             <span>{copiedButton === '480p' ? 'Copied!' : '480p'}</span>
+          </button>
+
+          <button
+            className={`btn btn-primary ${copiedButton === '360p' ? 'success' : ''}`}
+            onClick={handleDownload360}
+          >
+            <span className="material-icons">
+              {copiedButton === '360p' ? 'check' : 'sd'}
+            </span>
+            <span>{copiedButton === '360p' ? 'Copied!' : '360p'}</span>
           </button>
 
           <button
