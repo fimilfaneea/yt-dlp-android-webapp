@@ -68,22 +68,65 @@ function App() {
     }
   }
 
-  const handleDownload = async () => {
+  const validateUrl = () => {
     if (!url) {
       showStatus('Please enter a URL', 'error')
-      return
+      return false
     }
-
     if (!isValidURL(url)) {
       showStatus('Please enter a valid URL', 'error')
-      return
+      return false
     }
+    return true
+  }
 
-    const command = `cd /storage/emulated/0/Download && yt-dlp -o "%(title)[:15]s.%(ext)s" --replace-in-metadata title "[^a-zA-Z0-9]" "" "${url}"`
+  const handleDownload = async () => {
+    if (!validateUrl()) return
+
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp "${url}"`
     const copied = await copyToClipboard(command, 'download')
 
     if (copied) {
       showStatus('Command copied! Paste in Termux', 'success')
+    } else {
+      showStatus('Failed to copy command', 'error')
+    }
+  }
+
+  const handleDownload360 = async () => {
+    if (!validateUrl()) return
+
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp -f "bestvideo[height<=360]+bestaudio/best[height<=360]" "${url}"`
+    const copied = await copyToClipboard(command, '360p')
+
+    if (copied) {
+      showStatus('360p command copied! Paste in Termux', 'success')
+    } else {
+      showStatus('Failed to copy command', 'error')
+    }
+  }
+
+  const handleDownload480 = async () => {
+    if (!validateUrl()) return
+
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480]" "${url}"`
+    const copied = await copyToClipboard(command, '480p')
+
+    if (copied) {
+      showStatus('480p command copied! Paste in Termux', 'success')
+    } else {
+      showStatus('Failed to copy command', 'error')
+    }
+  }
+
+  const handleDownloadAudio = async () => {
+    if (!validateUrl()) return
+
+    const command = `mkdir -p /storage/emulated/0/Download/yt-dlp && cd /storage/emulated/0/Download/yt-dlp && yt-dlp -x --audio-format mp3 "${url}"`
+    const copied = await copyToClipboard(command, 'audio')
+
+    if (copied) {
+      showStatus('Audio command copied! Paste in Termux', 'success')
     } else {
       showStatus('Failed to copy command', 'error')
     }
@@ -163,7 +206,37 @@ function App() {
             <span className="material-icons">
               {copiedButton === 'download' ? 'check' : 'content_copy'}
             </span>
-            <span>{copiedButton === 'download' ? 'Copied!' : 'Copy Command'}</span>
+            <span>{copiedButton === 'download' ? 'Copied!' : 'Best Quality'}</span>
+          </button>
+
+          <button
+            className={`btn btn-primary ${copiedButton === '360p' ? 'success' : ''}`}
+            onClick={handleDownload360}
+          >
+            <span className="material-icons">
+              {copiedButton === '360p' ? 'check' : 'sd'}
+            </span>
+            <span>{copiedButton === '360p' ? 'Copied!' : '360p'}</span>
+          </button>
+
+          <button
+            className={`btn btn-primary ${copiedButton === '480p' ? 'success' : ''}`}
+            onClick={handleDownload480}
+          >
+            <span className="material-icons">
+              {copiedButton === '480p' ? 'check' : 'hd'}
+            </span>
+            <span>{copiedButton === '480p' ? 'Copied!' : '480p'}</span>
+          </button>
+
+          <button
+            className={`btn btn-primary ${copiedButton === 'audio' ? 'success' : ''}`}
+            onClick={handleDownloadAudio}
+          >
+            <span className="material-icons">
+              {copiedButton === 'audio' ? 'check' : 'music_note'}
+            </span>
+            <span>{copiedButton === 'audio' ? 'Copied!' : 'Audio MP3'}</span>
           </button>
 
           <button
